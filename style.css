@@ -492,8 +492,11 @@ h1 span {
 }
 
 @media (max-width: 768px) {
+  .logo h1 {
+    font-size:5vw
+  }
   .hero-content,
-  .doctors {
+  .doctor-card {
     flex-direction: column;
     text-align: center;
   }
