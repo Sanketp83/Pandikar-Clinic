@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     spaceBetween: 20,
     simulateTouch: true,
     autoplay: {
-      delay: 5000,
+      delay: 3000,
       stopOnLastSlide: false,
       disableOnInteraction: false,
     },
