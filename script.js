@@ -1,9 +1,28 @@
 // ===== NAV TOGGLE =====
+// const burgerBtn = document.getElementById("burger-btn");
+// const navLinks = document.querySelector(".nav-links");
+
+// burgerBtn.addEventListener("click", () => {
+//   navLinks.classList.toggle("active");
+// });
+// Handle burger menu toggle
+
 const burgerBtn = document.getElementById("burger-btn");
 const navLinks = document.querySelector(".nav-links");
 
-burgerBtn.addEventListener("click", () => {
+burgerBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // Prevent immediate close
   navLinks.classList.toggle("active");
+});
+
+// ✅ Close nav menu when clicking outside
+document.addEventListener("click", (e) => {
+  const isClickInsideMenu = navLinks.contains(e.target);
+  const isClickOnBurger = burgerBtn.contains(e.target);
+
+  if (!isClickInsideMenu && !isClickOnBurger) {
+    navLinks.classList.remove("active");
+  }
 });
 
 // ===== LOGO TEXT ANIMATION =====
@@ -52,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     spaceBetween: 20,
     simulateTouch: true,
     autoplay: {
-      delay: 3000,
+      delay: 5000,
       stopOnLastSlide: false,
       disableOnInteraction: false,
     },
@@ -90,18 +109,41 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ===== DARK MODE TOGGLE =====
-const darkToggle = document.getElementById("dark-toggle");
-if (darkToggle) {
-  darkToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
+// const darkToggle = document.getElementById("dark-toggle");
+// if (darkToggle) {
+//   darkToggle.addEventListener("click", () => {
+//     document.body.classList.toggle("dark");
 
-    const icon = darkToggle.querySelector("i");
-    if (document.body.classList.contains("dark")) {
-      icon.classList.remove("fa-moon");
-      icon.classList.add("fa-sun");
-    } else {
-      icon.classList.remove("fa-sun");
-      icon.classList.add("fa-moon");
-    }
-  });
+//     const icon = darkToggle.querySelector("i");
+//     if (document.body.classList.contains("dark")) {
+//       icon.classList.remove("fa-moon");
+//       icon.classList.add("fa-sun");
+//     } else {
+//       icon.classList.remove("fa-sun");
+//       icon.classList.add("fa-moon");
+//     }
+//   });
+// }
+// DARK MODE TOGGLE
+const darkToggle = document.getElementById("dark-toggle");
+const body = document.body;
+
+// 🔁 Load dark mode preference
+if (localStorage.getItem("theme") === "dark") {
+  body.classList.add("dark");
+  darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
 }
+
+// 🌗 Toggle dark mode
+darkToggle.addEventListener("click", () => {
+  body.classList.toggle("dark");
+
+  const isDark = body.classList.contains("dark");
+
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+
+  // Swap icon
+  darkToggle.innerHTML = isDark
+    ? '<i class="fas fa-sun"></i>'
+    : '<i class="fas fa-moon"></i>';
+});
